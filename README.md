@@ -10,4 +10,4 @@ also allows the user to define custom sudoku types.
 
 For more details see:
 
-https://bartp5.github.io/gss/docs/index.html
+https://bartp5.github.io/gss/
