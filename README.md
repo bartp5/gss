@@ -5,8 +5,11 @@
 | |_| |___) |__) |
  \____|____/____/
 ```
-The Generic Sudoku Solver (gss) can solve many types of sudokus and 
-also allows the user to define custom sudoku types.
+#gss
+The Generic Sudoku Solver (gss) can solve and generate many types of 
+sudokus (such as jigsaw sudokus, NRC sudokus parquet sudokus, etc.).
+The gss program allows the user to define the sudoklu structure so you 
+can define your own custom sudoku types.
 
 For more details see:
 
