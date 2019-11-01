@@ -17,7 +17,7 @@ B. Pieters
 \tableofcontents
 \pagebreak
 \section{Introduction}
-The generic sudoku solver (gss) is a program that solves and generates sudokus. The program not only solves standard sudokus but can handle many different sudoku topologies, such as X-, jigsaw-, and NRC-sudokus. The gss input format allows you to input and create all sorts of sudoku topologies. This document describes gss and how to use it.
+The generic sudoku solver (gss) is a program that solves and generates sudokus. The program not only solves standard sudokus but can handle many different sudoku topologies, such as X-, jigsaw-, and NRC-sudokus. The gss input format allows you to input and create all sorts of sudoku topologies. This document describes gss and how to use it. You can view this document online at \url{https://bartp5.github.io/gss/}.
 
 \section{The gss Program}
 \subsection{Description}
@@ -30,6 +30,8 @@ The sudokus gss can handle may have block sizes up to 128 symbols (if your platf
 The input format of gss allows you to specify the size of the sudoku, the block size and each block and its member elements, and the element symbol (if known). Valid sudoku files may also be used as a template for creating new sudokus. Furthermore, the gss format allows you to specify the output (ASCII) format in a flexible way, such that you can have gss display your sudoku in ASCII-art or let gss produce an input file for a 3rd party program which can then produce a prettier version of your sudoku.
 
 \subsection{\label{compile}Building gss}
+To build gss first get the latest source code from \url{https://github.com/bartp5/gss}.
+
 To compile gss type ``make'' and ``make install''. In the Makefile you may change some options. The size option may have the following values:
 \begin{itemize}
 	\item{} \verb-M32bit-
