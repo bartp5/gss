@@ -1,0 +1,6 @@
+In this directory you find some basic examples for gss input files
+
+In the subdirectory BookCreator you find some scripts and gss input 
+files to create puzzle books (pdf's) for various types of sudokus. In 
+this directory you can find examples on creating jigsaw sudokus and how 
+to create high quality graphics for your sudokus using gss and asymptote
