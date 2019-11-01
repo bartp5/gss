@@ -9,4 +9,4 @@ also allows the user to define custom sudoku types.
 
 For more details see:
 
-https://suulnnka.github.io/gss/index.html
+https://bartp5.github.io/gss/index.html
