@@ -1,3 +1,21 @@
+/*
+    JigSawMRF a random field generatopr to creater jigsaw sudokus
+    Copyright (C) 2019 B. Pieters
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -617,7 +635,10 @@ int main(int argc, char **argv)
 	int N=0, M=0, NP=0;
 	int off=0;
 	InitRandom();
-	
+	printf("JigSawMRF Copyright (C) 2019  B. Pieters\n");
+    printf("This program comes with ABSOLUTELY NO WARRANTY.\n");
+    printf("This is free software, and you are welcome to redistribute it\n");
+    printf("under the conditions of the GPL v3.\n");
 	k=1;
 	while (k<argc)
 	{

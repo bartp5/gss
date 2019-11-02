@@ -1,3 +1,20 @@
+/*
+    Generic Sudoku Solver (gss)
+    Copyright (C) 2019 B. Pieters
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -16,8 +33,9 @@ void PrintHeader()
 	printf("| |  _\\___ \\___ \\  (c) Bart Pieters 2018\n");
 	printf("| |_| |___) |__) |\n");
 	printf(" \\____|____/____/\n");
-	printf("Compiled with %d bit int support\n(handles block sizes up to %d elements)\n", (int)(8*sizeof(MASKINT)), (int)(8*sizeof(MASKINT)));
-
+	printf("Compiled with %d bit int support\n(handles block sizes up to %d elements)\n\n", (int)(8*sizeof(MASKINT)), (int)(8*sizeof(MASKINT)));
+	printf("This software is provided as is, without any warrenty. Consider yourself \n");
+	printf("lucky if it happens to work for you.\n");
 
 }
 
