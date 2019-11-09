@@ -1,3 +1,8 @@
+All files in the examples directory and its subdirectories are licenced
+under the CC0 license (see LICENSE file). Note that this license 
+differs from the license for all other files belonging to the gss 
+program.
+
 In this directory you find some basic examples for gss input files
 
 In the subdirectory BookCreator you find some scripts and gss input 

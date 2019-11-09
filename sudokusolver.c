@@ -34,8 +34,10 @@ void PrintHeader()
 	printf("| |_| |___) |__) |\n");
 	printf(" \\____|____/____/\n");
 	printf("Compiled with %d bit int support\n(handles block sizes up to %d elements)\n\n", (int)(8*sizeof(MASKINT)), (int)(8*sizeof(MASKINT)));
-	printf("This software is provided as is, without any warrenty. Consider yourself \n");
-	printf("lucky if it happens to work for you.\n");
+	printf("*******************************************\n");
+	printf("This software is provided as is, without \n");
+	printf("any warrenty. Consider yourself lucky if it\nworks.\n");
+	printf("*******************************************\n");
 
 }
 

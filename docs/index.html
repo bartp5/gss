@@ -714,7 +714,7 @@ gss.
 irregularly shaped. Usually a jigsaw sudoku consists of some regular blocks, such
 as rows and columns, and irregular blocks. To obtain a somewhat playable sudoku
 the cells in an irregular block are generally all connected, which makes it possible
-to make clear graphical representation of the irregular blocks. Naturally gss has
+to make clear graphical representation of the irregular blocks. Naturally, gss has
 no problem solving a jigsaw sudoku as we can simply define the irregular blocks
                                                                           
 
@@ -723,24 +723,23 @@ with the <span
 class="cmmi-12">&#x003C;</span>block<span 
 class="cmmi-12">&#x003E;</span>or <span 
 class="cmmi-12">&#x003C;</span>matrix<span 
-class="cmmi-12">&#x003E;</span>tags. However, gss cannot generate irregular blocks.
-This means we can tell gss what the structure of a jigsaw sudoku is and gss can
-generate a sudoku with a specified structure but gss cannot generate a new
+class="cmmi-12">&#x003E;</span>tags. However, gss cannot create a new
 jigsaw structure. To generate new jigsaw sudoku structures the utility
 JigSawMRF is provided. The JigSawMRF utility generates a random
 field, which separates a field into a number of equal sized and connected
 blocks.
 <!--l. 255--><p class="indent" >   The elements in the random fields JigSawMRF generate all have an ID
-number and an N dimensional space. The ID number can be used in gss to specify
-which cells wbelong to which block. The coordinates were introduced to aid the
-graphical representation of the field. The number of dimensions is at least one but
-can otherwise be chosen freely (finally you can create those hyper dimensional
-jigsaw sudokus).
-<!--l. 257--><p class="indent" >   The JigSawMRF starts with a specification of the field, i.e. which elements are
-in it, and for each element, which elements are its neighbors. The elements are
-than assigned random &#8221;phases&#8221;, i.e. are assigned to a random block. Then
-JigSawMRF iteratively swaps element phases until all phases are connected blobs
-within the field.
+number and a coordinate in an N dimensional space. The ID number can be used
+in gss to specify which cells belong to which block. The coordinates were
+introduced to aid the graphical representation of the field. The number of
+dimensions is at least one but can otherwise be chosen freely (so yes, you can
+create hyper dimensional jigsaw sudokus).
+<!--l. 257--><p class="indent" >   The JigSawMRF program starts with a specification of the field, i.e. which
+elements are in it, and for each element, which elements are its neighbors. The
+elements are than assigned random &#8221;phases&#8221;, i.e. are assigned to a random block.
+Then JigSawMRF iteratively swaps element phases until all elements of a
+specific phase are directly connected or connected via neighbors of the same
+phase.
 <!--l. 259--><p class="indent" >   The JigSawMRF program is called from the command line as follows:
                                                                           
 
