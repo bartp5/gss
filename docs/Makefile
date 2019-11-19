@@ -11,6 +11,8 @@ pdf: gss.tex pdffigs
 html: index.tex svgfigs
 	$(HTMC) index.tex $(HTMFLAGS)
 	$(HTMC) index.tex $(HTMFLAGS)
+# some post processing
+	sed -i 's/\(<head><title>\)\(<\/title>\)/\1Generic Sudoku Solver\2\n<meta name="viewport" content="width=device-width, initial-scale=1">/g' index.html
 index.tex: gss.tex
 # we create index.tex from gss.tex, adding an svg extension to all included images
 	sed 's/\(includegraph[^{]*[^}]*\)/\1.svg/g' gss.tex > index.tex
