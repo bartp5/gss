@@ -2,7 +2,6 @@
 \usepackage{graphicx}
 \usepackage{wasysym}
 \usepackage{hyperref}
-\usepackage{longtable}
 
 \begin{document}
 \begin{titlepage}
@@ -292,83 +291,50 @@ The following options with arguments are supported:
 \item [\texttt{--parallel, -p}] \hfill \\ In case the sudokus are large and/or of a high level, generating the sudokus may take some time. Use this flag to use more than one CPU when generating sudokus. This option relies on the GNU parallel program. 
 \end{description}
 
-The MakeBook.sh script knows several sudoku types. Samples of the sudoku types can be found in Table \ref{sampletable}. The sudoku types are:
+The MakeBook.sh script knows several sudoku types. Samples of the sudoku types can be found below. The sudoku types are:
 \begin{description}
-\item [\texttt{STD}] \hfill \\Standard 9x9 sudoku
+\item [\texttt{STD}] \hfill \\Standard 9x9 sudoku:
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{STD}		
+\end{center}
 \item [\texttt{NRC}] \hfill \\ NRC sudokus, like a standard sudoku plus 4 extra blocks (marked in grey)
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{NRC}		
+\end{center}
 \item [\texttt{NRCX}] \hfill \\ Like a NRC sudoku but with the two diagonals as additional blocks
-\item [\texttt{CUBE}] \hfill \\ Sudoku covering 3 faces of a cube. Each face consists of 4 4x4 blocks. Each row and each column extends over two faces.
-\item [\texttt{JIGSAW}] \hfill \\ Jigsaw sudoku. Like a standard sudoku with irregular block shapes
-\item [\texttt{JIGSAW-XL}] \hfill \\ Large jigsaw sudokus (16x16)
-\item [\texttt{JIGCUBE}] \hfill \\ A jigsaw version of the CUBE type sudoku
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{NRCX}		
+\end{center}
+\item [\texttt{CUBE}] \hfill \\ Sudoku covering 3 faces of a cube. Each face consists of 4 4x4 blocks. Each row and each column extends over two faces.	
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{CUBE}	
+\end{center}
+\item [\texttt{JIGSAW}] \hfill \\ Jigsaw sudoku. Like a standard sudoku with irregular block shapes	
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{jigsaw}	
+\end{center}
+\item [\texttt{JIGSAW-XL}] \hfill \\ Large jigsaw sudokus (16x16)	
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{jigsawxl}	
+\end{center}
+\item [\texttt{JIGCUBE}] \hfill \\ A jigsaw version of the CUBE type sudoku	
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{bigjigcube}	
+\end{center}
 \item [\texttt{3DCUBE}] \hfill \\ Foldable 3D sudoku
-\item [\texttt{PARQ}]  \hfill \\ Parquet sudoku. Some elements cover more than one row and one column.
-\item [\texttt{LINKED}]  \hfill \\ A 9x9 sudoku with 9 extra color-coded blocks 
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{3dcube}	
+\end{center}
+\item [\texttt{PARQ}]  \hfill \\ Parquet sudoku. Some elements cover more than one row and one column.	
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{parquet}	
+\end{center}
+\item [\texttt{LINKED}]  \hfill \\ A 9x9 sudoku with 9 extra color-coded blocks 	
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{linked}	
+\end{center}
 \end{description}
-\begin{longtable}{cc}
-	\caption{\label{sampletable} Example sudokus for the various sudoku types of the MakeBook.sh script}\\
-\hline
-\texttt{STD} & \texttt{NRC}\\	
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{STD}	
-	\end{center}
-\end{minipage} &
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{NRC}	
-	\end{center}
-\end{minipage}
-\\\pagebreak	
-\texttt{NRCX} & \texttt{CUBE}\\	
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{NRCX}	
-	\end{center}
-\end{minipage} &
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{CUBE}	
-	\end{center}
-\end{minipage} \\ \\
-\texttt{JIGSAW} & \texttt{JIGSAW-XL}\\	
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{jigsaw}	
-	\end{center}
-\end{minipage} &
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{jigsawxl}	
-	\end{center}
-\end{minipage} 
-\\ \\
-\texttt{JIGCUBE} & \texttt{3DCUBE}\\	
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{bigjigcube}	
-	\end{center}
-\end{minipage} &
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{3dcube}	
-	\end{center}
-\end{minipage} 
-\\
-\\\pagebreak	
-\texttt{PARQ} & \texttt{LINK}\\	
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{parquet}	
-	\end{center}
-\end{minipage} &
-\begin{minipage}{0.45\textwidth}	
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{linked}	
-	\end{center}
-\end{minipage} 
-\\
-\end{longtable}
+
 
 \appendix
 \section{\label{NRC4ASY}Example input file for gss}

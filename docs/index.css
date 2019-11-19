@@ -111,7 +111,5 @@ div.author{white-space: nowrap;}
 .abstract p {margin-left:5%; margin-right:5%;}
 div.abstract {width:100%;}
 .figure img.graphics {margin-left:10%;}
-table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }
-div.longtable{text-align:center;}
 /* end css.sty */
 
