@@ -25,7 +25,7 @@
 #include "sudoku_generator.h"
 #include "sudokusolver.h"
 
-int verbose=1;
+int gss_verbose=1;
 void PrintHeader()
 {
 	printf("  ____ ____ ____\n");
@@ -288,13 +288,13 @@ int main(int argc, char **argv)
 				fill=1;
 				break;
 			case 'q':
-				verbose=0;
+				gss_verbose=0;
 				break;
 			case 'a':
 				analyze=1;
 				break;
 			case 'v':	
-				verbose=2;				
+				gss_verbose=2;				
 				break;
 			case 'c':		
 				compact=1;
@@ -324,7 +324,7 @@ int main(int argc, char **argv)
 			STRAT|=(1<<MASKINTER);
 			STRAT|=(1<<BRUTE);				
 		}
-		if (verbose)
+		if (gss_verbose)
 		{
 			PrintHeader();
 			printf("\n* Enabled Strategies: ---------------------\n");			
@@ -349,7 +349,7 @@ int main(int argc, char **argv)
 			}
 			S=S_Read(template_sudoku);
 			files++;
-			switch(ProcessSudoku(S, verbose, maxsol, limitlevel, STRAT, &level))
+			switch(ProcessSudoku(S, gss_verbose, maxsol, limitlevel, STRAT, &level))
 			{
 				case UNSOLVED:
 					unsolved++;
@@ -379,13 +379,13 @@ int main(int argc, char **argv)
 				fprintf(stderr, "Error: please sepcify a sudoku template using the --template option\n");
 				return 1;	
 			}
-			if (verbose)
+			if (gss_verbose)
 				printf("* Generate sudoku according to template: --\n");
 			S=S_Read(template_sudoku);
 			files++;
 			if (fill)
 			{
-				if (verbose)
+				if (gss_verbose)
 				{
 					printf("Filling an empty sudoku:");
 					if (S.BS>16)
@@ -404,9 +404,9 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				if (verbose)
+				if (gss_verbose)
 					printf("Solving Template Sudoku\n");
-				switch(ProcessSudoku(S, verbose, maxsol, limitlevel, STRAT, &level))
+				switch(ProcessSudoku(S, gss_verbose, maxsol, limitlevel, STRAT, &level))
 				{
 					case UNSOLVED:
 						unsolved++;
@@ -484,7 +484,7 @@ int main(int argc, char **argv)
 			if (gssf)
 				GssOut(S, gssf, "|.|");
 			S_free(&S);	
-			if (verbose)
+			if (gss_verbose)
 				printf("-------------------------------------------\n\n");		
 		}
 		else if (fill)
@@ -496,7 +496,7 @@ int main(int argc, char **argv)
 			}
 			S=S_Read(template_sudoku);
 			files++;
-			if (verbose)
+			if (gss_verbose)
 			{
 				printf("* Filling an empty sudoku: ----------------\n");
 				if (S.BS>16)
@@ -507,13 +507,13 @@ int main(int argc, char **argv)
 			if (Fill(S,optfill)==0)
 			{
 				S_Print(S, sf);
-				if (verbose)
+				if (gss_verbose)
 					printf("Success\n-------------------------------------------\n\n");
 			}
 			else
 			{
 				S_Print(S, sf);
-				if (verbose)
+				if (gss_verbose)
 					printf("Failed\n-------------------------------------------\n\n");
 			}
 			if (gssf)
@@ -536,7 +536,7 @@ int main(int argc, char **argv)
 					if (!S_ReadNextCompactStandard(fin, &S))
 						break;
 					S_Print(S,pf);					
-					switch(ProcessSudoku(S, verbose, maxsol, limitlevel, STRAT, &level))
+					switch(ProcessSudoku(S, gss_verbose, maxsol, limitlevel, STRAT, &level))
 					{
 						case UNSOLVED:
 							unsolved++;
@@ -574,7 +574,7 @@ int main(int argc, char **argv)
 				S=S_Read(argv[optind++]);
 				files++;
 				S_Print(S,pf);	
-				switch(ProcessSudoku(S, verbose, maxsol, limitlevel, STRAT, &level))
+				switch(ProcessSudoku(S, gss_verbose, maxsol, limitlevel, STRAT, &level))
 				{
 					case UNSOLVED:
 						unsolved++;

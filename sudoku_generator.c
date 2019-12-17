@@ -327,7 +327,7 @@ void ScrambleSudoku(Sudoku *S, double Pdoit)
 	r+=Mirror(S, Pdoit, 'v');
 	r+=Mirror(S, Pdoit, 'h');
 	r+=InterchangBlocks(S, Pdoit);
-	if (verbose)
+	if (gss_verbose)
 		printf("Found %d scrambling operations\nEach applied with a probablity of %f\n", r, Pdoit);
 }
 
@@ -354,7 +354,7 @@ void ShuffleSudoku(Sudoku *S)
 }
 void Randomize(Sudoku *S)
 {
-	if (verbose)
+	if (gss_verbose)
 		printf("Randomizing the sudoku\n");
 	InitRandom();
 	/* randomize */
@@ -412,7 +412,7 @@ int GenerateSudoku_sparse(Sudoku *S, int maxlevel, int STRAT)
 			case SOLVED:
 				for (i=0;i<S->N;i++)
 					S->M[i]=MB[i];	
-				if (verbose>1)
+				if (gss_verbose>1)
 				{		
 					printf("New sudoku with level %d and %d unknown:\n", level, S_UK(*S));		
 					S_Print(*S, stdout);
@@ -487,7 +487,7 @@ int GenerateSudoku(Sudoku *S, int maxlevel, int STRAT)
 				/*new Nums will not have this value, it is already eliminated */
 				for (i=0;i<S->N;i++)
 					S->M[i]=MB[i];	
-				if (verbose>1)
+				if (gss_verbose>1)
 					printf("%f %% complete %d unknown:\n", (double)j/(double)S->N, S_UK(*S));		
 				ml=level;
 				if (level<=1)
@@ -503,7 +503,7 @@ int GenerateSudoku(Sudoku *S, int maxlevel, int STRAT)
 				MB[Nums[j]]=M;			
 		}
 	}
-	if (verbose>1)
+	if (gss_verbose>1)
 	{		
 		printf("New sudoku with level 1  and %d unknown:\n", S_UK(*S));		
 		S_Print(*S, stdout);
@@ -524,7 +524,7 @@ int GenerateSudoku(Sudoku *S, int maxlevel, int STRAT)
 				case SOLVED:
 					for (i=0;i<S->N;i++)
 						S->M[i]=MB[i];	
-					if (verbose>1)
+					if (gss_verbose>1)
 					{		
 						printf("New sudoku with level %d and %d unknown:\n", level, S_UK(*S));		
 						S_Print(*S, stdout);

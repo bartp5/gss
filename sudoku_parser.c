@@ -102,7 +102,7 @@ void ReadBlockMatrix (Sudoku *S, FILE *f)
 	
 	}
 	BLI=calloc(NB, sizeof(int));
-	if (verbose)
+	if (gss_verbose)
 		printf("Adding %d custom blocks from Matrix\n", NB);
 	S->BLKS=realloc(S->BLKS, (S->NBLK+NB)*sizeof(int *));
 	for (i=0;i<NB;i++)
@@ -205,7 +205,7 @@ void ReadSudokuFormat (Sudoku *S, FILE *f, char *pattern)
 	S->M=malloc(S->N*sizeof(MASKINT));
 	S->Npos=malloc((S->N+1)*sizeof(int));
 	S->format=malloc(Nla*sizeof(char));
-	if (verbose)
+	if (gss_verbose)
 		printf("Reading Sudoku Data and Formating\n");
 	
 	while(fgets(line, MAXLINE,f)&&(go))
@@ -351,7 +351,7 @@ Sudoku S_Read(char *fn)
 	pattern[0]='.';
 	pattern[1]='\0';
 	
-	if (verbose)
+	if (gss_verbose)
 	{
 		printf("* Reading a Sudoku from file: -------------\n");
 		printf("file: %s\n", fn);
@@ -368,11 +368,11 @@ Sudoku S_Read(char *fn)
 			case BLOCK:
 			{
 				int n=0, nn;
-				if (verbose)
+				if (gss_verbose)
 					printf("Custom Block:");
 				if (!S.BS)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("No block size given, assuming 9\n");
 					S.BS=9;
 				}
@@ -395,7 +395,7 @@ Sudoku S_Read(char *fn)
 							exit(1);
 						}
 						S.BLKS[S.NBLK-1][n]=nn-1;
-						if (verbose)
+						if (gss_verbose)
 							printf(" %d",S.BLKS[S.NBLK-1][n]+1);
 						n++;
 					}
@@ -410,11 +410,11 @@ Sudoku S_Read(char *fn)
 			}
 			case STD_BLOCKS:
 			{
-				if (verbose)
+				if (gss_verbose)
 					printf("Standard Sudoku\n");
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
@@ -466,17 +466,17 @@ Sudoku S_Read(char *fn)
 			case ROW_BLOCKS:
 			{
 				int NB;
-				if (verbose)
+				if (gss_verbose)
 					printf("Standard Rows\n");
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
 				if (!S.BS)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku block size for standard blocks\n");
 					S.BS=9;
 				}
@@ -491,17 +491,17 @@ Sudoku S_Read(char *fn)
 			case COL_BLOCKS:
 			{
 				int NB;
-				if (verbose)
+				if (gss_verbose)
 					printf("Standard Columns\n");
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
 				if (!S.BS)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku block size for standard blocks\n");
 					S.BS=9;
 				}
@@ -514,17 +514,17 @@ Sudoku S_Read(char *fn)
 			}
 			case DOWNDIAG_BLOCK:
 			{
-				if (verbose)
+				if (gss_verbose)
 					printf("Down-Diagonal block\n");
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
 				if (!S.BS)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku block size for standard blocks\n");
 					S.BS=9;
 				}
@@ -535,17 +535,17 @@ Sudoku S_Read(char *fn)
 			}
 			case UPDIAG_BLOCK:
 			{
-				if (verbose)
+				if (gss_verbose)
 					printf("Up-Diagonal block\n");
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
 				if (!S.BS)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku block size for standard blocks\n");
 					S.BS=9;
 				}
@@ -556,18 +556,18 @@ Sudoku S_Read(char *fn)
 			}
 			case BLOCKBLOCKS:
 			{
-				if (verbose)
+				if (gss_verbose)
 					printf("Standard Blocks\n");
 				
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
 				if (!S.BS)
 				{	
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku block size for standard blocks\n");
 					S.BS=9;
 				}
@@ -593,17 +593,17 @@ Sudoku S_Read(char *fn)
 			}
 			case MATRIX:
 			{
-				if (verbose)
+				if (gss_verbose)
 					printf("Block Matrix\n");
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
 				if (!S.BS)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku block size for standard blocks\n");
 					S.BS=9;
 				}
@@ -614,13 +614,13 @@ Sudoku S_Read(char *fn)
 			{
 				if (!S.N)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku size for standard blocks\n");
 					S.N=81;
 				}
 				if (!S.BS)
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Assuming standard sudoku block size for standard blocks\n");
 					S.BS=9;
 				}
@@ -643,7 +643,7 @@ Sudoku S_Read(char *fn)
 				sscanf(line, "<size>%d", &S.N);
 				if (S.N>0)
 				{
-					if(verbose)
+					if(gss_verbose)
 						printf("Setting sudoku size to %d fields\n", S.N);
 				}
 				else
@@ -663,7 +663,7 @@ Sudoku S_Read(char *fn)
 				sscanf(line, "<blocksize>%d", &S.BS);
 				if ((S.BS>0)&&(S.BS<=8*sizeof(MASKINT)))
 				{
-					if (verbose)
+					if (gss_verbose)
 						printf("Setting sudoku block size to %d fields\n", S.BS);
 				}
 				else
@@ -693,7 +693,7 @@ Sudoku S_Read(char *fn)
 	
 	if (S.NBLK==0)
 	{
-		if (verbose)
+		if (gss_verbose)
 			printf("No blokcs specified, assuming standard Sudoku\n");
 		
 		if ((S.N!=81)||(S.BS!=9))
@@ -726,7 +726,7 @@ Sudoku S_Read(char *fn)
 	PopulateIBlocks(&S);
 	if (Check(&S))
 		fprintf(stderr, "Warning: detected conflicts in loaded sudoku\n");
-	if (verbose)
+	if (gss_verbose)
 		printf("-------------------------------------------\n\n");
 	return S;
 

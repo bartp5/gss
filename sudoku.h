@@ -15,12 +15,14 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/* ************************************************************************************ */
 /* I use integers as bit masks where 1 int can represent all possible values of a field */
 /* The size of the mask int thus determines the maximum blocksize gss supports          */
 /* The size is determined duing compilation. The following sizes are supported          */
 /* ************************************************************************************ */
-/* 32 bit --> define M32bit during compilation / default option                         */
-/* 64 bit --> define M64bit during compilation                                          */
+/* 32  bit --> define M32bit during compilation / default option                        */
+/* 64  bit --> define M64bit during compilation                                         */
+/* 128 bit --> define M128bit during compilation                                        */
 /* ************************************************************************************ */
 #include <stdint.h>
 #ifdef M32bit

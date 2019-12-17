@@ -15,5 +15,5 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-extern int verbose;
+extern int gss_verbose;
 SSTATE ProcessSudoku(Sudoku S, int verbose, int maxsol, int limitlevel, int STRAT, int *maxlevel);
