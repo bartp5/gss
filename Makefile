@@ -41,9 +41,9 @@ bindir=/usr/bin
 mandir=/usr/share/man/man1
 all:gss jigsawmrf
 jigsawmrf: JigSawMRF.c
-	$(CC) $(CFLAGS) $(LFLAGS) JigSawMRF.c -o JigSawMRF
+	$(CC) $(CFLAGS) JigSawMRF.c -o JigSawMRF $(LFLAGS) 
 gss: $(OBJ) Makefile
-	$(CC) $(CFLAGS) $(LFLAGS) -o gss $(OBJ)
+	$(CC) $(CFLAGS) -o gss $(OBJ) $(LFLAGS) 
 test: gss
 	echo Testing gss against the sudoku17 database
 	./gss -s solved.dat -c sudoku17_spl.dat >/dev/null
