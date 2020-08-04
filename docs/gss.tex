@@ -153,7 +153,7 @@ must be solved. If you do not have a valid sudoku template you may try the sudok
 \subsection{Basic Usage}
 In this section we present several examples of gss input files for various types of sudokus. You can find example input files for gss in the examples directory.
 
-A basic input file for a standard sudoku could look like shown in gss-input \ref{plainsudoku}. As no size and blocks are specified gss assumes the standard size and block structure. The sudoku array is formatted such in ASCII that the sudoku is somewhat readable. The input formatting will be copied by gss for the puzzle and solution output (i.e. gss just copies one to one whatever follows the \textless sudoku\textgreater{} tag, editing only those characters it recognizes as elements in the sudoku array). This copying of the formatting makes it relatively easy to define your input file such that the output format is what you want it to be. 
+A basic input file for a standard sudoku could look like shown in Figure \ref{plainsudoku}. As no size and blocks are specified gss assumes the standard size and block structure. The sudoku array is formatted such in ASCII that the sudoku is somewhat readable. The input formatting will be copied by gss for the puzzle and solution output (i.e. gss just copies one to one whatever follows the \textless sudoku\textgreater{} tag, editing only those characters it recognizes as elements in the sudoku array). This copying of the formatting makes it relatively easy to define your input file such that the output format is what you want it to be. 
 
 To solve this sudoku you can run
 \texttt{gss sudoku.gss}\\
@@ -177,7 +177,7 @@ To solve this sudoku you can run
 \caption{\label{plainsudoku}An example of a standard sudoku input file for gss}
 \end{figure}
 
-An example of how you can create a specific sudoku variant can be found in gss-input \ref{nrcsudoku}. This file is for an ``NRC'' sudoku, a sudoku with 4 additional blocks on top of the normal sudoku structure. In this example the additional blocks are defined using the \textless matrix\textgreater{} tag. If you do any type of non-standard block definition you always have to define all blocks as gss will not make any assumptions about the structure. As the remaining blocks are blocks in a standard sudoku we can use the \textless standardblocks\textgreater{} tag to define all remaining blocks with one tag. The sudoku array itself is again formatted in ASCII. 
+An example of how you can create a specific sudoku variant can be found in Figure \ref{nrcsudoku}. This file is for an ``NRC'' sudoku, a sudoku with 4 additional blocks on top of the normal sudoku structure. In this example the additional blocks are defined using the \textless matrix\textgreater{} tag. If you do any type of non-standard block definition you always have to define all blocks as gss will not make any assumptions about the structure. As the remaining blocks are blocks in a standard sudoku we can use the \textless standardblocks\textgreater{} tag to define all remaining blocks with one tag. The sudoku array itself is again formatted in ASCII. 
 
 \begin{figure}
 \begin{verbatim}
@@ -222,6 +222,40 @@ An example of how you can create a specific sudoku variant can be found in gss-i
 \caption{\label{nrcsudoku}An example of an NRC sudoku input file for gss}
 \end{figure}
 
+
+Another very common variation is the size of the sudoku. The basic structure of a 9x9 standard sudoku can be maintained for a series of sizes starting with a 4x4, 9x9, 16x16, 25x25, etc. In Figure \ref{sudoku16} an example of a 16x16 sudoku is shown. As this time the size is not standard we need to tell gss the total number of elements in the sudoku with the \verb,<size>,-tag, and the block size with the \verb,<blocksize>,-tag. If the standard structure fits to the indicated size and block size, the \verb,<standardblocks>,-tag can again be used to specify the all blocks for the standard sudoku structure. Depending on how gss is compiled gss has a maximum block-size of 128, i.e. the largest sudoku with the standard structure that is supported by gss is 121x121.
+
+\begin{figure}
+\begin{verbatim}
+<size>256
+<blocksize>16
+<standardblocks>
+<sudoku>
++-------------+-------------+-------------+-------------+
+| .. .. .. 08 | 10 12 .. .. | .. 14 .. .. | .. .. .. 05 |
+| .. .. .. .. | 02 .. .. 04 | .. .. .. .. | .. .. .. 11 |
+| .. .. 07 .. | .. 05 01 .. | .. 16 .. 03 | 04 .. 14 06 |
+| 01 .. .. 09 | .. 06 .. 07 | 11 .. .. .. | .. 03 16 .. |
++-------------+-------------+-------------+-------------+
+| .. .. 12 .. | .. 11 .. .. | 07 .. 04 .. | .. 02 .. 13 |
+| 05 01 08 .. | .. .. .. .. | 16 .. .. .. | .. .. .. 04 |
+| 03 .. .. .. | .. .. .. .. | 09 05 .. 15 | .. 06 07 .. |
+| .. .. .. .. | .. 04 .. 08 | 13 .. .. 01 | .. .. .. .. |
++-------------+-------------+-------------+-------------+
+| .. 16 .. 03 | 01 07 .. .. | 15 11 02 .. | 05 .. 10 .. |
+| .. .. .. .. | .. .. .. 05 | 03 .. .. 09 | .. .. .. 12 |
+| .. .. .. 13 | 11 .. .. 06 | .. .. .. .. | .. .. .. .. |
+| 06 07 05 02 | .. .. 12 .. | .. .. .. 10 | .. .. 09 08 |
++-------------+-------------+-------------+-------------+
+| .. 02 15 .. | .. .. 16 .. | .. .. 11 05 | 14 04 .. 09 |
+| 16 05 09 .. | .. .. 13 .. | 06 .. .. .. | 08 .. .. 01 |
+| .. .. 11 07 | 15 .. .. .. | .. 04 .. 08 | 12 .. 05 16 |
+| 14 .. .. .. | 04 10 .. 01 | .. .. .. .. | 03 .. .. .. |
++-------------+-------------+-------------+-------------+
+\end{verbatim}
+\caption{\label{sudoku16}An example of an 16x16 sudoku in gss}
+\end{figure}
+
 \subsection{Testing gss}
 There are many databases around with many sudokus. It is useful to be able to use gss on such a database to benchmark and verify gss. With the \texttt{--compact-format} option you can pass a sudoku database. With this option gss will read multiple sudokus from one file. It will simply read the file until it read 81 number characters, and take the result as one sudoku. Unknowns may be specified by either a zero or a period. If gss encounters a ``\#'' it will skip the remainder of the line so you can add comments. Some commonly used sudoku databases are a list of minimal sudokus (with only 17 hints) which can be downloaded from \\
 \url{http://staffhome.ecm.uwa.edu.au/~00013890/sudokumin.php}.\\
@@ -232,7 +266,7 @@ When it comes to benchmarking you will find that gss is considerably slower than
 Per default gss tries to use logic and uses backtracking only as a last resort. As it is, however, backtracking is not all that inefficient on the relatively small grid of a standard 9x9 sudoku. In fact we can easily boost gss performance by disabling the use of higher level logic (either pass  \texttt{-S brute} or \texttt{-l 1}). Without higher level logic gss performance improves quite a bit on standard sudokus. Note however, that on larger sudokus backtracking may perform very bad as compared to higher level logic.
 
 \subsection{Using gss with asymptote}
-The previous two examples use ASCII formatting for the sudoku. In general gss only handles ASCII in and output. However, the ASCII format is designed such that gss may provide the input for other progranms to produce prettier output. You can, for example, use gss in conjunction with the Asymptote program to create high quality sudoku graphics. To this end there are two tags in gss that are important. First of all the  ``\textless pattern\textgreater '' tag, this tag specifies a pattern for a sudoku element. This way gss can tell elements apart from other numbers that may be part format requirements from another program. The second is the ``\textless emptychar\textgreater '' tag. Per default gss replaces unknowns with periods. This is clear in ASCII formatting but may not be desirable in conjunction with other programs. In figures \ref{NRCout}.a , and \ref{NRCout}.b an example is shown which was created with gss in conjunction with asymptote. In Fig. \ref{NRCout}.a we show a pretty version of the same sudoku as in gss-input \ref{nrcsudoku}. The input file to create these graphics can be found in Appendix \ref{NRC4ASY}.
+The previous two examples use ASCII formatting for the sudoku. In general gss only handles ASCII in and output. However, the ASCII format is designed such that gss may provide the input for other progranms to produce prettier output. You can, for example, use gss in conjunction with the Asymptote program to create high quality sudoku graphics. To this end there are two tags in gss that are important. First of all the  ``\textless pattern\textgreater '' tag, this tag specifies a pattern for a sudoku element. This way gss can tell elements apart from other numbers that may be part format requirements from another program. The second is the ``\textless emptychar\textgreater '' tag. Per default gss replaces unknowns with periods. This is clear in ASCII formatting but may not be desirable in conjunction with other programs. In figures \ref{NRCout}.a , and \ref{NRCout}.b an example is shown which was created with gss in conjunction with asymptote. In Fig. \ref{NRCout}.a we show a pretty version of the same sudoku as in Figure \ref{nrcsudoku}. The input file to create these graphics can be found in Appendix \ref{NRC4ASY}.
 
 \begin{figure}
 	\begin{center}
