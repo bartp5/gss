@@ -5,13 +5,13 @@ program.
 
 In this directory you find some basic examples for gss input files, 
 namely:
-sudoku.gss			- a very basic ASCII formatted sudoku example
-nrcsudoku.gss		- an ASCII formatted NRC sudoku example
-16x16.gss			- an ASCII formatted 16x16 sudoku template (i.e. 
-					  the sudoku is solved)
-16x16_asy.gss		- 16x16 sudoku template to use with asymptote
-emptysudoku.gss		- an example of an empty ASCII formatted sudoku 
-					  template
+sudoku.gss          - a very basic ASCII formatted sudoku example
+nrcsudoku.gss       - an ASCII formatted NRC sudoku example
+16x16.gss           - an ASCII formatted 16x16 sudoku template (i.e. 
+                      the sudoku is solved)
+16x16_asy.gss       - 16x16 sudoku template to use with asymptote
+emptysudoku.gss     - an example of an empty ASCII formatted sudoku 
+                      template
 
 Basic usage to get you started:
 
@@ -20,10 +20,12 @@ gss sudoku.gss
 
 To generate a new level 2 sudoku use the -t flag to specify a template 
 and the -g flag to set the level of the to be generated sudoku:
+
 gss -t sudoku.gss -g 2
 
 If you want to produce quality graphics you may use the asymptote 
 program (https://asymptote.sourceforge.io/). For example so:
+
 gss -t 16x16_asy.gss -g 2 -p puzzle.asy -s solution.asy
 asy puzzle.asy solution.asy
 
@@ -37,9 +39,11 @@ The amptysudoku.gss file demonstrates an empty template file. You
 cannot directly use this file in gss as a template as gss cannot 
 solve this invalid sudoku. However, you can let gss try to fill the 
 sudoku with the -f and -F flags. For example:
+
 gss -t emptysudsoku.gss -f -g 1
 
 or
+
 gss -t emptysudsoku.gss -F -g 1
 
 The difference between the -f and -F flags is that -f uses basic 
@@ -49,8 +53,13 @@ sudokus where backtracking  will take an excessive amount of time.
 However, also with the -F flag your milage may vary for large sudokus.
 
 If you want to generate sudokus of various sizes you may use the 
-MakeSTDsudoku.sh and MakeSTDsudoku_asy.sh scripts, which generate 
+MakeSTDsudoku.sh and MakeSTDsudoku_asy.sh bash scripts, which generate 
 ASCII-formatted or asy formatted template (solved sudokus) input files.
+The scripts take a single integer between 2 and 11 as argument and 
+print a gss input file to stdout. The integers determines the size of 
+the sudoku. For a 9x9 sudoku use 3, a 16x16 sudoku use 4, etc. A 
+typical call would thus be:
+MakeSTDsudoku.sh 4 > 16x16.gss
 
 In the subdirectory BookCreator you find some scripts and gss input 
 files to create puzzle books (pdf's) for various types of sudokus. In 
