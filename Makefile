@@ -30,7 +30,7 @@ OBJ=sudoku_parser.o sudoku_generator.o sudokusolver.o sudoku.o
 # CFLAGS=-Ofast -flto -DM64bit -DGCC_POPCNT64 -march=native
 
 # -flto and Ofast do not seem to make things faster, builtin popcound does
-CFLAGS=-O3 -DM128bit -DGCC_POPCNT64 -march=native
+CFLAGS=-O3 -flto -DM128bit -DGCC_POPCNT64 -march=native
 # CFLAGS=-O3 -DM128bit -DGCC_POPCNT128 -march=native
 # CFLAGS=-Ofast -flto -D$(SIZE) -DGCC_POPCNT -march=native
 LFLAGS=-lm

@@ -1134,8 +1134,133 @@ int LogicSolve(Sudoku *S, int *maxlevel, int limitlevel, int STRAT)
 }
 
 
+int NumElim(Sudoku *S, int el)
+/* finds the element value that does the most damage in the directly linked elements
+ */
+{
+	int elim=0;
+	MASKINT M;
+	int i,j=0;
+	for (i=0;i<S->BS;i++) // check all options and count direct eliminations */
+	{
+		if (S->M[el]&VX[i])
+		{
+			for (j=1;j<=S->LINKS[el][0];j++)
+				if ((S->M[S->LINKS[el][j]])&VX[i])
+					elim++;
+		}
+	}
+	return elim;	
+}
 
+
+inline int Choose(Sudoku *S)
+{
+	/* chooses next element to try backtracking with */
+	/* first find elements with few options */
+	int minp=S->BS, maxelim=-1, elim, el=-1;
+	int i, n;
+	
+	for (i=0;i<S->N;i++)
+	{
+		if ((n=EL_P(S->M[i]))>1)
+		{
+			if (minp>n)
+			{
+				el=i;			
+				maxelim=NumElim(S, i);
+				minp=n;
+			}
+			else if (minp==n)
+			{
+				elim=NumElim(S, i);
+				if (elim>maxelim)
+				{
+					maxelim=elim;
+					el=i;
+				}
+			}
+		}	
+	}
+	return el;		
+}
 int BruteForce(Sudoku *S, int *NS, MASKINT ***sol, int maxsol, int limitlevel, int STRAT)
+/* Last resort is Backtracking
+ * this will find (all) solutions, but no more than maxsol */																		
+{
+	int i, k, minp=0, el=0, ml, v;
+	int *lvl1;
+	MASKINT V;
+	MASKINT *EL;
+	MASKINT *MB;
+	minp=S->BS;
+	if (S_UK(*S)==0)
+		return 0;
+	MB=malloc(S->N*sizeof(MASKINT));
+	lvl1=malloc(S->N*sizeof(MASKINT));
+	
+	
+	/* choose elemnt and value to set */
+	el=Choose(S);
+	if (el<0)
+		return -1;
+	/* try all possible values and report each solution */
+	/* backup the mask */
+	for (i=0;i<S->N;i++)
+	{
+		lvl1[i]=S->lvl1[i];
+		MB[i]=S->M[i];
+	}		
+	EL=&(S->M[el]);
+	V=(*EL);
+	
+	for (k=0;k<S->BS;k++)
+	{
+		if (V&VX[k]) /* VX[k] is one of the possibilities */
+		{
+			(*EL)=VX[k];
+			if (Eliminate(S,el)>=0) /* we first use cheap elimination to see if there is a reason to continue */
+			{
+				v=S_UK(*S);
+				if (v)
+					v=LogicSolve(S, &ml, limitlevel, STRAT);
+				if (v==0) /* found a solution */
+				{
+					(*NS)++;
+					(*sol)=realloc((*sol), (*NS)*sizeof(int *));
+					(*sol)[(*NS)-1]=malloc(S->N*sizeof(MASKINT));
+					for (i=0;i<S->N;i++)
+						(*sol)[(*NS)-1][i]=S->M[i];
+				}			
+				if (v>0) /* still not solved, do it again, recursively */
+					v=BruteForce(S, NS, sol, maxsol, limitlevel, STRAT); 
+				if ((*NS)>maxsol) /* found more than maxsol solutions, give it up */
+				{
+					for (i=0;i<S->N;i++)
+					{
+						S->M[i]=MB[i];
+						S->lvl1[i]=lvl1[i];
+					}
+					break;
+				}
+			}
+			/* restore the mask */
+			for (i=0;i<S->N;i++)
+			{
+				S->M[i]=MB[i];
+				S->lvl1[i]=lvl1[i];
+			}
+		}
+	}
+	free(MB);
+	free(lvl1);
+	if ((*NS)==0) /* no solutions found */
+		return -1;
+	return 0;
+}
+
+
+int BruteForce2(Sudoku *S, int *NS, MASKINT ***sol, int maxsol, int limitlevel, int STRAT)
 /* Last resort is Backtracking
  * this will find (all) solutions, but no more than maxsol */																		
 {
@@ -1148,6 +1273,7 @@ int BruteForce(Sudoku *S, int *NS, MASKINT ***sol, int maxsol, int limitlevel, i
 	MB=malloc(S->N*sizeof(MASKINT));
 	lvl1=malloc(S->N*sizeof(MASKINT));
 	/* find an element with few options but more than one */
+	/* try to add heuristics here, how many paths does 1 step of level one elimination remove? */
 	for (i=0;i<S->N;i++)
 	{
 		if (EL_P(S->M[i])>1)
@@ -1161,9 +1287,9 @@ int BruteForce(Sudoku *S, int *NS, MASKINT ***sol, int maxsol, int limitlevel, i
 			}
 		}	
 	}
-	if (minp==S->BS)/* is this sudoku empty or what */
+	if (minp==S->BS)/* is this sudoku empty? */
 		return -1;
-	if (minp==0)/* is this sudoku empty or what */
+	if (minp==0)/* is this sudoku solved? */
 		return -1;
 	/* try all possible values and report each solution */
 	/* backup the mask */
@@ -1290,10 +1416,10 @@ SSTATE Solve(Sudoku *S, int *maxlevel, MASKINT ***sol, int *ns, int maxsol, int 
 
 
 
-int FillEmptySudoku_r(Sudoku *S, int el, int limitlevel)
+int FillEmptySudoku_r(Sudoku *S, int limitlevel)
 /* sudoku filler, use logic + backtracking to find 1 solution to an empty sudoku */
 {
-	int i, j, v, ml, strat;
+	int i, j, v, ml, strat, el;
 	int k=0;
 	MASKINT *MB, M;
 	int *lvl1;
@@ -1316,13 +1442,10 @@ int FillEmptySudoku_r(Sudoku *S, int el, int limitlevel)
 	strat|=(1<<MASK);		
 	/* recursive, backtracking, sudoku filler */	
 	/* we go block wise through */
-	if (el>=S->N)
-	{
-		fprintf(stderr, "Panic: element %d not in sudoku\n", el);
-		exit(1);
-	}
-	while ((el<S->N)&&(EL_P(S->M[el])<2))
-		el++;
+
+	el=Choose(S);
+	if (el<0)
+		return -1;
 	/* try all values for element el */
 	while (k<S->BS)
 	{
@@ -1338,7 +1461,7 @@ int FillEmptySudoku_r(Sudoku *S, int el, int limitlevel)
 					v=LogicSolve(S, &ml, limitlevel, strat);
 			}
 			if (v>0)
-				v=FillEmptySudoku_r(S, el+1, limitlevel); /* call recursively with the next element */
+				v=FillEmptySudoku_r(S, limitlevel); /* call recursively with the next element */
 			
 			if (v<0) /* conflict */
 			{
@@ -1398,7 +1521,7 @@ int FillEmptySudoku(Sudoku *S)
 {
 	int r;
 	ClearSudoku(S);
-	r=FillEmptySudoku_r(S, 0, 1);
+	r=FillEmptySudoku_r(S, 1);
 	return r;
 }
 
@@ -1672,7 +1795,7 @@ int ResolveConflicts(Sudoku *S)
 	MB=malloc(S->N*sizeof(MASKINT));
 	for (k=0;k<S->N;k++)
 		MB[k]=S->M[k];
-		
+	N=S->BS/2;	
 	printf("%d %.1f %%", iter, 100*((double)(S->N-D))/((double)S->N));
 	fflush(stdout);
 	while (D&&(SinceLastImprovement<MAXNOINCR))
