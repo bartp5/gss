@@ -432,6 +432,10 @@ Sudoku S_Read(char *fn)
 				 * 36x36	(36	6x6 squares + 36 rows and 36 columns)
 				 * 49x49	(49 7x7 squares + 49 rows and 49 columns)
 				 * 64x64	(64 8x8 squares + 64 rows and 64 columns)
+				 * beyond this you need to have 128 bit enabled  
+				 * 81x81	(81	9x9 squares + 81 rows and 81 columns)
+				 * 100x100	(100 10x10 squares + 100 rows and 100 columns)
+				 * 121x121	(121 11x11 squares + 121 rows and 121 columns)
 				 * after than you run out of bits! */
 				for (i=2;i*i<=(int)(8*sizeof(MASKINT));i++)
 				{

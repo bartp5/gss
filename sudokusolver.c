@@ -30,7 +30,7 @@ void PrintHeader()
 {
 	printf("  ____ ____ ____\n");
 	printf(" / ___/ ___/ ___|  Generic Sudoku Solver\n");
-	printf("| |  _\\___ \\___ \\  (c) Bart Pieters 2018\n");
+	printf("| |  _\\___ \\___ \\  (c) Bart Pieters 2020\n");
 	printf("| |_| |___) |__) |\n");
 	printf(" \\____|____/____/\n");
 	printf("Compiled with %d bit int support\n(handles block sizes up to %d elements)\n\n", (int)(8*sizeof(MASKINT)), (int)(8*sizeof(MASKINT)));

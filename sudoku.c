@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+#include <math.h>
 #include "sudoku.h"
 
 #ifdef NEEDPOPCNT32
@@ -1592,9 +1593,26 @@ int ResolveConflict(Sudoku *S, int num, int *D)
 	}
 	return 0;
 }
+
+
+
+int PerfectSquare(int i)
+{
+    int i2;
+    double f;
+ 
+    f=sqrt((double)i);
+    i2=(int)f;
+ 
+    if(i2*i2==i)
+        return i2;
+    else
+        return -1;
+}
+
 #define MAXITER_NUM 2
-#define MAXITER (S->BS*10000000)
-#define MAXNOINCR (S->BS*500000)
+#define MAXITER   (S->BS*10000000)
+#define MAXNOINCR (S->BS*10000000)
 int ResolveConflicts(Sudoku *S)
 {
 	MASKINT *MB;
@@ -1607,8 +1625,25 @@ int ResolveConflicts(Sudoku *S)
 	time( &curtime );
 	srand( (unsigned  int) curtime );
 	
+	if ((S_UK(*S)==S->N)&&(S->BS*S->BS==S->N)&&((num=PerfectSquare(S->BS))>0))
+	{
+		/* assume a standard sudoku structure */
+		int i, j, k, l, m;
+		
+		for (m=0;m<S->N;m++)
+		{
+			i=m/(num*num*num); 		// block row
+			j=(m/(num*num))%num; 	// row in block
+			l=m%S->BS;				// column
+			k=l/num;				// block col 
+			l=l%num; 				// col in block
+			S->M[m]=VX[(i+k*num+l+j*num)%S->BS];
+		}
+	}
+	
 	if (S_UK(*S)!=0)
 	{
+		/* fill in empty elements with symbols which are missing */
 		int *SQ;
 		int i=0;
 		SQ=SymbolQuantity(S);
@@ -1638,7 +1673,7 @@ int ResolveConflicts(Sudoku *S)
 	for (k=0;k<S->N;k++)
 		MB[k]=S->M[k];
 		
-	printf("%d %.1f %% ", iter, 100*((double)(S->N-D))/((double)S->N));
+	printf("%d %.1f %%", iter, 100*((double)(S->N-D))/((double)S->N));
 	fflush(stdout);
 	while (D&&(SinceLastImprovement<MAXNOINCR))
 	{
@@ -1667,7 +1702,7 @@ int ResolveConflicts(Sudoku *S)
 		{
 			double a;
 			a=(double)RAND_MAX*(double)SinceLastImprovement/(double)MAXNOINCR;
-			printf("\r%d %.1f %% %f", iter, 100*((double)(S->N-D0))/((double)S->N), a/(double)RAND_MAX);
+			printf("\r%d %3.1f %% %10f", iter, 100*((double)(S->N-D0))/((double)S->N), a/(double)RAND_MAX);
 			if (rand()>(int)(0.8*a)) /* do not stray too far from the optimum, certainly in the beginning when it should be easy to improve*/
 			{
 				/* gravitate to optimum */
@@ -1729,3 +1764,4 @@ int ResolveConflicts(Sudoku *S)
 	printf("\rafter %d iterations %.1f %% consistency is achieved\n", iter, 100*((double)(S->N-D))/((double)S->N));
 	return D;
 }
+
