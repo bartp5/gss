@@ -328,13 +328,13 @@ int main(int argc, char **argv)
 		{
 			PrintHeader();
 			printf("\n* Enabled Strategies: ---------------------\n");			
-			if (STRAT&(1<<MASK))
+			if (SDO(MASK))
 				printf("strategy: eliminate\n");
-			if (STRAT&(1<<MASKHIDDEN))
+			if (SDO(MASKHIDDEN))
 				printf("strategy: hidden\n");
-			if (STRAT&(1<<MASKINTER))
+			if (SDO(MASKINTER))
 				printf("strategy: inter\n");
-			if (STRAT&(1<<BRUTE))
+			if (SDO(BRUTE))
 				printf("strategy: brute\n");
 			printf("-------------------------------------------\n\n");	
 		}
@@ -429,7 +429,7 @@ int main(int argc, char **argv)
 				gen=S.BS;
 				printf("The maximum level for this sudoku is %d\n", S.BS);
 			} 
-			if ((gen==S.BS)&&((STRAT&(1<<BRUTE))==0))
+			if ((gen==S.BS)&&((SDO(BRUTE))==0))
 			{
 				gen=S.BS-1;
 				printf("The maximum level for this sudoku is %d (with current selected strategies)\n", S.BS-1);
@@ -525,7 +525,7 @@ int main(int argc, char **argv)
 			if (compact)
 			{
 				
-				int nprocessed=0, nsolved=0, nunsolved=0, ninvalid=0, nmultisol=0;
+				int nprocessed=0, nsolved=0, nunsolved=0, ninvalid=0, nmultisol=0, nguess=0, no_guess=0;
 				FILE *fin;
 				S=S_InitStdSudoku(compact);
 				fin=OpenCompactMultiSudokuFile(argv[optind++]);
@@ -558,12 +558,16 @@ int main(int argc, char **argv)
 					}
 					nprocessed++;
 					processed++;
+					nguess+=GUESS;
+					no_guess+=(GUESS==0);
 				}
 				fclose(fin);
 				t1=clock();
 				printf("Results for sudokus in %s:\n", argv[optind-1]);
 				printf("%d sudokus in %e s (%e sudokus/s):\n", nprocessed, ((double)(t1-t0))/CLOCKS_PER_SEC, (double)(nprocessed)*CLOCKS_PER_SEC/((double)(t1-t0)));
 				printf("\t%d sudokus solved\n", nsolved);
+				printf("\t%d guesses (%f/sudoku)\n", nguess, (double)nguess/(double)nprocessed);
+				printf("\t%d sudokus solved without guesses\n", no_guess);
 				printf("\t%d sudokus failed to solve\n", nunsolved);
 				printf("\t%d sudokus with multiple solutions\n", nmultisol);
 				printf("\t%d sudokus invalid\n", ninvalid);

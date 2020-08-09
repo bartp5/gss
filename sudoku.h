@@ -90,3 +90,7 @@ int EL_P(MASKINT V);
 int FillEmptySudoku(Sudoku *S);
 void ClearSudoku(Sudoku *S);
 int ResolveConflicts(Sudoku *S);
+
+extern int GUESS;							/* stores the number of guesses made during solving */
+
+#define SDO(S) (STRAT&(1<<S))				/* macro to test whether a strategy is enabled or not, assumes the variable STRAT is defined!*/
