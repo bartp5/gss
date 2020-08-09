@@ -665,6 +665,64 @@ int FastLevel1(Sudoku *S)
 	return elim;
 }
 
+int FastLevel2Set(Sudoku *S)
+/* fast set elimination for level 2 */
+{
+	int i,j, k, l;
+	int elim=0;
+	int *el, n;
+	int *B;
+	elim=0;
+	MASKINT AM=0;
+	el=malloc(S->BS*sizeof(int));
+	for (i=0;i<S->NBLK;i++)
+	{
+		B=S->BLKS[i];
+		/* find possible set */
+		n=0;
+		for (j=0;j<S->BS;j++)	/* select all elements with up to level possible values */
+		{
+			if (EL_P(S->M[B[j]])==2)
+				el[n++]=j;
+		}
+		if (n<2)
+			continue;
+		for (j=0;j<n;j++)
+			for (k=j+1;k<n;k++) /* all combinations of two elements */
+				if (S->M[B[el[j]]]==S->M[B[el[k]]]) /* match */
+				{
+					AM=~S->M[B[el[j]]];
+					for (l=0;l<S->BS;l++)
+					{
+						if ((l!=el[j])&&(l!=el[k]))
+						{
+							int pre, post, r;
+							pre=EL_P((S->M[B[l]]));
+							(S->M[B[l]])&=AM;
+							post=EL_P((S->M[B[l]]));
+							elim+=pre-post;		
+							if (post==1)
+							{
+								r=Eliminate(S, B[l]);
+								if (r<0)
+								{
+									free(el);
+									return r;
+								}
+								else
+									elim+=r;
+							}
+							
+						}
+					}
+				}
+		
+	}
+	free(el);
+	return elim;	
+}
+
+
 int SetEliminate(Sudoku *S, int level)
 /* More advanced elimination, elimination of a set:
  * If we have a set of n elements in a block, whose 
@@ -696,6 +754,9 @@ int SetEliminate(Sudoku *S, int level)
 	int MinLevel;
 	if (level==1)
 		return FastLevel1(S);
+	if (level==2)
+		return FastLevel2Set(S);
+		
 	el=malloc(S->BS*sizeof(int));
 	set=malloc(S->BS*sizeof(int));
 	s_set=malloc(S->BS*sizeof(int));
@@ -709,12 +770,15 @@ int SetEliminate(Sudoku *S, int level)
 		
 		for (i=0;i<S->BS;i++)	/* select all elements with up to level possible values */
 		{
-			AM|=S->M[B[i]]; /* all possibilities in this block */
 			j=EL_P((S->M[B[i]]));
-			if ((j<=level)&&(j>MinLevel))
+			if (j>MinLevel)
 			{
-				el[n]=i;
-				n++;
+				AM|=S->M[B[i]]; /* all possibilities in this block excluding solved ones */
+				if (j<=level)
+				{
+					el[n]=i;
+					n++;
+				}
 			}
 		}
 		/* we now have to find level elements among these which share the same set of possibilities */
@@ -731,7 +795,7 @@ int SetEliminate(Sudoku *S, int level)
 				M|=(S->M[s_set[j]]);
 			}
 			
-			if ((EL_P(M)==level)&&((~M)&AM))
+			if ((EL_P(M)==level)&&((~M)&AM)) /* level options in set *and* perhaps we can eliminate somthing */
 			{
 				M=~M;
 				for (j=0;j<S->BS;j++)
